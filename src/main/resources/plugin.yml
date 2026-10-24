@@ -1,0 +1,9 @@
+name: Conclave
+version: '${version}'
+
+main: me.serenity.conclave.Conclave
+api-version: '26.3'
+load: POSTWORLD
+
+authors: [SouyanDev]
+website: www.souyande.xyz
