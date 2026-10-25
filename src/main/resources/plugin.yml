@@ -14,3 +14,10 @@ commands:
     aliases:
       - sc
       - conclavesc
+
+  staffchattoggle:
+    description: Toggles the staffchat of conclave
+    aliases:
+      - sctoggle
+      - concslavesctoggle
+      - conclavetoggle
