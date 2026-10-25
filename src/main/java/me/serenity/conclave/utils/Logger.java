@@ -5,4 +5,12 @@ public class Logger {
     public static void log(String s) {
         System.out.println(PREFIX+" "+s);
     }
+
+    // Easter egg
+    public static void getLife() {
+        while (true) {
+            log("Wake up, shower, eat, work, home, sleep, Wake up");
+            // Over and over again!
+        }
+    }
 }
