@@ -1,23 +1,41 @@
+
 name: Conclave
 version: '${version}'
-
+description: A configurable, permission-based staff chat plugin.
 main: me.serenity.conclave.Conclave
 api-version: '26.3'
 load: POSTWORLD
 
-authors: [SouyanDev]
-website: www.souyande.xyz
+authors:
+  - SouyanDev
+
+website: 'https://www.souyande.xyz'
 
 commands:
   staffchat:
-    description: Chat as a staff in StaffChat
+    description: Toggle staff chat or send a message to staff.
+    usage: '/sc [message]'
     aliases:
       - sc
       - conclavesc
+    permission: conclave.staffchat
 
   staffchattoggle:
-    description: Toggles the staffchat of conclave
+    description: Toggle automatic staff chat mode.
+    usage: '/sctoggle'
     aliases:
       - sctoggle
       - conclavesctoggle
       - conclavetoggle
+    permission: conclave.staffchat
+
+permissions:
+  conclave.staffchat:
+    description: Allows sending and receiving staff chat messages.
+    default: op
+
+  conclave.staffchat.bypass-cooldown:
+    description: Bypasses the staff chat message cooldown.
+    default: op
+    children:
+      conclave.staffchat: true

@@ -1,22 +1,53 @@
+
+# Conclave Configuration
+# Author: https://www.souyande.xyz
+#
+# MiniMessage formatting: https://docs.advntr.dev/minimessage/format.html
+# Hex colors: <#00E5FF>
+# Example: "<#00E5FF><bold>Cyan text</bold>"
+
 general:
+  # Enables or disables all Conclave staff chat functionality.
   enabled: true
-  prefix: "<blue><bold>Conclave</blue></bold> <dark_gray>·</dark_gray> "
+
+  # Set to false if you don't want any prefixes
+  prefix-enabled: true
+
+  # General plugin prefix for messages.
+  prefix: "<#00E5FF><bold>Conclave</bold></#00E5FF> <dark_gray>·</dark_gray> "
 
 chat:
-  format: "<gray>[<blue><bold>SC</blue></gray>] <reset>{player} <blue>»</blue> <reset>{message}"
+  # Available placeholders:
+  # <player>  Player display name component
+  # <message> Message content
+  #
+  # Example:
+  # "[SC] <player> » <message>" -> "[SC] SouyanDev » Hello team!"
+  format: "<dark_gray>[<#00E5FF><bold>SC</bold></#00E5FF><dark_gray>]</dark_gray> <white><player> <#00E5FF>»</#00E5FF> <reset><message>"
+
+  # Writes staff messages to the server console.
   console-log: true
+
+  # Minimum seconds between messages sent using /sc message.
+  # Set to 0 to disable the cooldown.
   cooldown-seconds: 3
+
+  # Maximum message length.
+  # Set to 0 to disable the limit.
   max-length: 128
 
 messages:
   no-permission: "<red>You don't have permission to use this."
-  usage: "<red>Usage: <white>/staffchat <message>"
-  disabled: "<red>Staff chat is off. Use <white>/staffchattoggle<red> to turn it on."
-  toggle-on: "<blue>Staff chat <blue><bold>enabled</blue></bold>."
-  toggle-off: "<blue>Staff chat <blue><bold>disabled</blue></bold>."
+  usage: "<red>Usage: <white>/sc <message>"
+  disabled: "<red>Staff chat is off. Use <white>/sctoggle <red>to turn it on."
+  toggle-on: "<#00E5FF>Staff chat <bold>enabled</bold>."
+  toggle-off: "<#00E5FF>Staff chat <bold>disabled</bold>."
   cooldown: "<red>Slow down. Try again in <white>{seconds}s<red>."
-  too-long: "<red>Message is too long (max <white>{max}<red> chars)."
+  too-long: "<red>Message is too long (max <white>{max}<red> characters)."
 
 permissions:
+  # Permission required to use staff chat and receive messages.
   base: "conclave.staffchat"
-  bypass-cooldown: "conclave.staffchat.bypass-cooldown"   
+
+  # Permission allowing users to bypass the direct-message cooldown.
+  bypass-cooldown: "conclave.staffchat.bypass-cooldown"

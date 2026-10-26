@@ -48,6 +48,10 @@ public final class Conclave extends JavaPlugin {
         return get().getConfig().getBoolean("general.enabled", true);
     }
 
+    public static boolean prefixEnabled() {
+        return get().getConfig().getBoolean("general.prefix-enabled");
+    }
+
     public static String prefix() {
         return get().getConfig().getString("general.prefix", "");
     }
@@ -79,6 +83,11 @@ public final class Conclave extends JavaPlugin {
     public static Component msg(String key) {
         String raw = get().getConfig().getString("messages." + key, "<red>[Conclave] Missing: " + key);
         return MM.deserialize(raw);
+    }
+
+    public static Component prefixed(Component message) {
+        if (!prefixEnabled()) return message;
+        return MM.deserialize(prefix()).append(message);
     }
 
     public static Component msg(String key, String placeholder, String value) {

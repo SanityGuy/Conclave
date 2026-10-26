@@ -3,6 +3,7 @@ package me.serenity.conclave.commands;
 import me.serenity.conclave.Conclave;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +28,7 @@ public class StaffChatCommand implements CommandExecutor {
         if (!(sender instanceof Player p)) return true;
 
         if (!p.hasPermission(Conclave.permBase())) {
-            p.sendMessage(Conclave.msg("no-permission"));
+            p.sendMessage(Conclave.prefixed(Conclave.msg("no-permission")));
             return true;
         }
 
@@ -36,20 +37,12 @@ public class StaffChatCommand implements CommandExecutor {
             Byte current = pdc.get(Conclave.get().toggleKey(), PersistentDataType.BYTE);
             byte newValue = (byte) ((current != null && current == 1) ? 0 : 1);
             pdc.set(Conclave.get().toggleKey(), PersistentDataType.BYTE, newValue);
-            p.sendMessage(Conclave.msg(newValue == 1 ? "toggle-on" : "toggle-off"));
+            p.sendMessage(Conclave.prefixed(Conclave.msg(newValue == 1 ? "toggle-on" : "toggle-off")));
         } else {
-            PersistentDataContainer pdc = p.getPersistentDataContainer();
-            Byte state = pdc.get(Conclave.get().toggleKey(), PersistentDataType.BYTE);
-            if (state == null || state != 1) {
-                p.sendMessage(Conclave.msg("disabled"));
-                return true;
-            }
-
             String message = String.join(" ", args);
-
             int maxLen = Conclave.maxLength();
             if (maxLen > 0 && message.length() > maxLen) {
-                p.sendMessage(Conclave.msg("too-long", "{max}", String.valueOf(maxLen)));
+                p.sendMessage(Conclave.prefixed(Conclave.msg("too-long", "{max}", String.valueOf(maxLen))));
                 return true;
             }
 
@@ -58,18 +51,15 @@ public class StaffChatCommand implements CommandExecutor {
                 Long last = lastSent.get(p.getUniqueId());
                 long elapsed = (System.currentTimeMillis() - (last != null ? last : 0)) / 1000;
                 if (elapsed < cooldown) {
-                    p.sendMessage(Conclave.msg("cooldown", "{seconds}", String.valueOf(cooldown - elapsed)));
+                    p.sendMessage(Conclave.prefixed(Conclave.msg("cooldown", "{seconds}", String.valueOf(cooldown - elapsed))));
                     return true;
                 }
             }
             lastSent.put(p.getUniqueId(), System.currentTimeMillis());
 
-            String safeMessage = message.replace("<", "&lt;");
-            String format = Conclave.chatFormat()
-                    .replace("{player}", p.name().toString())
-                    .replace("{message}", safeMessage);
-
-            Component formatted = MM.deserialize(format);
+            Component formatted = MM.deserialize(Conclave.chatFormat(),
+                    Placeholder.component("player", p.displayName()),
+                    Placeholder.unparsed("message", message));
 
             for (Player other : Bukkit.getOnlinePlayers()) {
                 if (!other.hasPermission(Conclave.permBase())) continue;

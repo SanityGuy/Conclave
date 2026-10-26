@@ -4,6 +4,7 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import me.serenity.conclave.Conclave;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,14 +26,15 @@ public class StaffChatListener implements Listener {
         Byte state = pdc.get(Conclave.get().toggleKey(), PersistentDataType.BYTE);
         if (state == null || state != 1) return;
 
+        if (!Conclave.enabled()) return;
+
         e.setCancelled(true);
 
-        String safeMessage = e.message().toString().replace("<", "&lt;");
-        String format = Conclave.chatFormat()
-                .replace("{player}", p.name().toString())
-                .replace("{message}", safeMessage);
-
-        Component formatted = MM.deserialize(format);
+        Component formatted = MM.deserialize(
+                Conclave.chatFormat(),
+                Placeholder.component("player", p.displayName()),
+                Placeholder.component("message", e.message())
+        );
 
         for (Player other : Bukkit.getOnlinePlayers()) {
             if (!other.hasPermission(Conclave.permBase())) continue;
