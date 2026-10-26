@@ -17,7 +17,6 @@ commands:
     usage: '/sc [message]'
     aliases:
       - sc
-      - conclavesc
     permission: conclave.staffchat
 
   staffchattoggle:
@@ -25,9 +24,13 @@ commands:
     usage: '/sctoggle'
     aliases:
       - sctoggle
-      - conclavesctoggle
-      - conclavetoggle
     permission: conclave.staffchat
+
+  conclave:
+    description: Main Conclave plugin command.
+    usage: '/conclave <help|reload|version>'
+    aliases:
+      - cv
 
 permissions:
   conclave.staffchat:
@@ -39,3 +42,15 @@ permissions:
     default: op
     children:
       conclave.staffchat: true
+
+  conclave.help:
+    description: Allows viewing Conclave help.
+    default: true
+
+  conclave.version:
+    description: Allows viewing plugin information.
+    default: true
+
+  conclave.reload:
+    description: Allows reloading Conclave configuration.
+    default: op

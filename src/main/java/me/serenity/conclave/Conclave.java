@@ -1,5 +1,6 @@
 package me.serenity.conclave;
 
+import me.serenity.conclave.commands.ConclaveCommand;
 import me.serenity.conclave.commands.StaffChatCommand;
 import me.serenity.conclave.listeners.StaffChatListener;
 import me.serenity.conclave.utils.Logger;
@@ -8,6 +9,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -23,9 +25,10 @@ public final class Conclave extends JavaPlugin {
         instance = this;
         saveDefaultConfig();
         toggleKey = new NamespacedKey(this, "staffchat_toggle");
-        getServer().getPluginManager().registerEvents(new StaffChatListener(), this);
+        registerEvent(new StaffChatListener());
         registerCommand("staffchat", new StaffChatCommand());
         registerCommand("staffchattoggle", new StaffChatCommand());
+        registerCommand("conclave", new ConclaveCommand());
 
         Logger.log("Plugin has been enabled!");
     }
@@ -101,5 +104,9 @@ public final class Conclave extends JavaPlugin {
                 getCommand(cmd), "Command not found in plugin.yml: " + cmd
         );
         command.setExecutor(executor);
+    }
+
+    private void registerEvent(Listener listener) {
+        get().getServer().getPluginManager().registerEvents(listener, this);
     }
 }
