@@ -1,9 +1,10 @@
 package me.serenity.conclave.utils;
 
+import org.bukkit.Bukkit;
+
 public class Logger {
-    public static final String PREFIX = "[Conclave]";
-    public static void log(String s) {
-        System.out.println(PREFIX+" "+s);
+    public static void log(String s){
+        Bukkit.getLogger().info("[Conclave] "+s);
     }
 
     // Easter egg
