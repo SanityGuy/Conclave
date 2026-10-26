@@ -1,0 +1,22 @@
+general:
+  enabled: true
+  prefix: "<blue><bold>Conclave</blue></bold> <dark_gray>·</dark_gray> "
+
+chat:
+  format: "<gray>[<blue><bold>SC</blue></gray>] <reset>{player} <blue>»</blue> <reset>{message}"
+  console-log: true
+  cooldown-seconds: 3
+  max-length: 128
+
+messages:
+  no-permission: "<red>You don't have permission to use this."
+  usage: "<red>Usage: <white>/staffchat <message>"
+  disabled: "<red>Staff chat is off. Use <white>/staffchattoggle<red> to turn it on."
+  toggle-on: "<blue>Staff chat <blue><bold>enabled</blue></bold>."
+  toggle-off: "<blue>Staff chat <blue><bold>disabled</blue></bold>."
+  cooldown: "<red>Slow down. Try again in <white>{seconds}s<red>."
+  too-long: "<red>Message is too long (max <white>{max}<red> chars)."
+
+permissions:
+  base: "conclave.staffchat"
+  bypass-cooldown: "conclave.staffchat.bypass-cooldown"   

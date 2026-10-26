@@ -19,5 +19,5 @@ commands:
     description: Toggles the staffchat of conclave
     aliases:
       - sctoggle
-      - concslavesctoggle
+      - conclavesctoggle
       - conclavetoggle
